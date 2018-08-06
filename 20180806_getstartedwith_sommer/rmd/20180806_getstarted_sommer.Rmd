@@ -1,0 +1,21 @@
+---
+title: "Getting Started With `sommer`"
+author: "Peter von Rohr"
+date: "2018-08-06"
+output: html_notebook
+---
+
+## Disclaimer
+This notebook gives a few scratch ideas on how to use the package `sommer` for a simple linear multivariate mixed model analysis.
+
+
+## Installation
+The first step is to install the package that we want to experiment with
+
+```{r}
+if (!require(sommer))
+  install.packages("sommer")
+```
+
+
+## 
