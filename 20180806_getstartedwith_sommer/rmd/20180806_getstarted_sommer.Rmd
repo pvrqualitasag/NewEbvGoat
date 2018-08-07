@@ -18,4 +18,67 @@ if (!require(sommer))
 ```
 
 
-## 
+## Data Simulation
+The tests on how to use the package `sommer` and possibly some other helper packages is tested by a simple analysis of a small simulated dataset. This section describes how the data is simulated.
+
+### Parameters
+We start by fixing some parameters
+
+```{r, echo=FALSE}
+set.seed(5098)
+vp <- 36
+vg <- 9
+ve <- vp - vg
+h2 <- vg / vp
+```
+
+The following table gives an overview over the assumed parameter values
+
+```{r, echo=FALSE}
+df_par <- dplyr::tibble(Parameter = c("phenotypic variance",
+                                      "genetic additive variance",
+                                      "residual variance",
+                                      "heritability"),
+                        Value = c(vp,
+                                  vg,
+                                  ve,
+                                  h2))
+knitr::kable(df_par, align = c('l','r'))
+```
+
+
+### Pedigree
+```{r}
+nsire <- 3
+ndam <- 9
+nfounder <- nsire + ndam
+```
+
+The pedigree consists of `r nsire` unrelated sires which are mated to `r ndam` different dams. In total, we get `r nfounder` so-called founder animals. Those are all animals without known parents. Based on these animals, we can create the founder pedigree
+
+```{r}
+suppressPackageStartupMessages( require(pedigreemm) )
+ped_founder <- pedigree(sire = rep(NA, nfounder), dam = rep(NA, nfounder), label = as.character(1:nfounder))
+ped_founder
+```
+
+Founder animals are mated to produce the first offspring generation. The number of offspring for each parent is determined in a rather arbitrary way. Together with the founders this generates the pedigree up until the first generation.
+
+```{r}
+mat_mating_firstgen <- matrix(NA, nrow = nfounder, ncol = nfounder)
+mat_mating_firstgen[1,4] <- 2
+mat_mating_firstgen[1,5] <- 1
+mat_mating_firstgen[1,6] <- 1
+mat_mating_firstgen[1,7] <- 1
+mat_mating_firstgen[2,8] <- 2
+
+vec_nr_offspring_sire <- c(4,3,2)
+
+# ped_firstgen <- pedigree(sire = c(rep(1,)))
+```
+
+
+```{r, echo=FALSE, results='asis'}
+cat(rmddochelper::get_latest_change())
+```
+

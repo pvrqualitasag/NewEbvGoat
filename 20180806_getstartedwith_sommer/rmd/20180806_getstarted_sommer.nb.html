@@ -190,27 +190,122 @@ $(document).ready(function () {
 <pre class="r"><code>if (!require(sommer))
   install.packages(&quot;sommer&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBzb21tZXJcbnRoZXJlIGlzIG5vIHBhY2thZ2UgY2FsbGVkIOKAmHNvbW1lcuKAmXRyeWluZyBVUkwgJ2h0dHBzOi8vY3Jhbi5yc3R1ZGlvLmNvbS9iaW4vbWFjb3N4L2VsLWNhcGl0YW4vY29udHJpYi8zLjUvc29tbWVyXzMuNS50Z3onXG5Db250ZW50IHR5cGUgJ2FwcGxpY2F0aW9uL3gtZ3ppcCcgbGVuZ3RoIDQ1MzU2NjQgYnl0ZXMgKDQuMyBNQilcbj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09XG5kb3dubG9hZGVkIDQuMyBNQlxuIn0= -->
-<pre><code>Loading required package: sommer
-there is no package called ‘sommer’trying URL 'https://cran.rstudio.com/bin/macosx/el-capitan/contrib/3.5/sommer_3.5.tgz'
-Content type 'application/x-gzip' length 4535664 bytes (4.3 MB)
-==================================================
-downloaded 4.3 MB</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5UaGUgZG93bmxvYWRlZCBiaW5hcnkgcGFja2FnZXMgYXJlIGluXG5cdC92YXIvZm9sZGVycy8ydi9qZnNxajh6ajJmMTIyamNneTE1bnpmbjAwMDAwZ24vVC8vUnRtcFROZzZoMi9kb3dubG9hZGVkX3BhY2thZ2VzXG4ifQ== -->
-<pre><code>
-The downloaded binary packages are in
-    /var/folders/2v/jfsqj8zj2f122jcgy15nzfn00000gn/T//RtmpTNg6h2/downloaded_packages</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="section" class="section level2">
-<h2></h2>
+<div id="data-simulation" class="section level2">
+<h2>Data Simulation</h2>
+<p>The tests on how to use the package <code>sommer</code> and possibly some other helper packages is tested by a simple analysis of a small simulated dataset. This section describes how the data is simulated.</p>
+<div id="parameters" class="section level3">
+<h3>Parameters</h3>
+<p>We start by fixing some parameters</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The following table gives an overview over the assumed parameter values</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+
+<!-- rnb-html-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImtuaXRfYXNpcyJdLCJzaXppbmdQb2xpY3kiOltdfX0= -->
+
+<table>
+<thead>
+<tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">phenotypic variance</td>
+<td align="right">36.00</td>
+</tr>
+<tr class="even">
+<td align="left">genetic additive variance</td>
+<td align="right">9.00</td>
+</tr>
+<tr class="odd">
+<td align="left">residual variance</td>
+<td align="right">27.00</td>
+</tr>
+<tr class="even">
+<td align="left">heritability</td>
+<td align="right">0.25</td>
+</tr>
+</tbody>
+</table>
+
+
+<!-- rnb-html-end -->
+
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="pedigree" class="section level3">
+<h3>Pedigree</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnNpcmUgPC0gM1xubmRhbSA8LSA5XG5uZm91bmRlciA8LSBuc2lyZSArIG5kYW1cbmBgYCJ9 -->
+<pre class="r"><code>nsire &lt;- 3
+ndam &lt;- 9
+nfounder &lt;- nsire + ndam</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The pedigree consists of 3 unrelated sires which are mated to 9 different dams. In total, we get 12 so-called founder animals. Those are all animals without known parents. Based on these animals, we can create the founder pedigree</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKCByZXF1aXJlKHBlZGlncmVlbW0pIClcbnBlZF9mb3VuZGVyIDwtIHBlZGlncmVlKHNpcmUgPSByZXAoTkEsIG5mb3VuZGVyKSwgZGFtID0gcmVwKE5BLCBuZm91bmRlciksIGxhYmVsID0gYXMuY2hhcmFjdGVyKDE6bmZvdW5kZXIpKVxucGVkX2ZvdW5kZXJcbmBgYCJ9 -->
+<pre class="r"><code>suppressPackageStartupMessages( require(pedigreemm) )
+ped_founder &lt;- pedigree(sire = rep(NA, nfounder), dam = rep(NA, nfounder), label = as.character(1:nfounder))
+ped_founder</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgc2lyZSAgZGFtXG4xICA8TkE+IDxOQT5cbjIgIDxOQT4gPE5BPlxuMyAgPE5BPiA8TkE+XG40ICA8TkE+IDxOQT5cbjUgIDxOQT4gPE5BPlxuNiAgPE5BPiA8TkE+XG43ICA8TkE+IDxOQT5cbjggIDxOQT4gPE5BPlxuOSAgPE5BPiA8TkE+XG4xMCA8TkE+IDxOQT5cbjExIDxOQT4gPE5BPlxuMTIgPE5BPiA8TkE+XG4ifQ== -->
+<pre><code>   sire  dam
+1  &lt;NA&gt; &lt;NA&gt;
+2  &lt;NA&gt; &lt;NA&gt;
+3  &lt;NA&gt; &lt;NA&gt;
+4  &lt;NA&gt; &lt;NA&gt;
+5  &lt;NA&gt; &lt;NA&gt;
+6  &lt;NA&gt; &lt;NA&gt;
+7  &lt;NA&gt; &lt;NA&gt;
+8  &lt;NA&gt; &lt;NA&gt;
+9  &lt;NA&gt; &lt;NA&gt;
+10 &lt;NA&gt; &lt;NA&gt;
+11 &lt;NA&gt; &lt;NA&gt;
+12 &lt;NA&gt; &lt;NA&gt;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Founder animals are mated to produce the first offspring generation. The number of offspring for each parent is determined in a rather arbitrary way. Together with the founders this generates the pedigree up until the first generation.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWF0X21hdGluZ19maXJzdGdlbiA8LSBtYXRyaXgoTkEsIG5yb3cgPSBuZm91bmRlciwgbmNvbCA9IG5mb3VuZGVyKVxubWF0X21hdGluZ19maXJzdGdlblsxLDRdIDwtIDJcbm1hdF9tYXRpbmdfZmlyc3RnZW5bMSw1XSA8LSAxXG5tYXRfbWF0aW5nX2ZpcnN0Z2VuWzEsNl0gPC0gMVxubWF0X21hdGluZ19maXJzdGdlblsxLDddIDwtIDFcbm1hdF9tYXRpbmdfZmlyc3RnZW5bMiw4XSA8LSAyXG5cbnZlY19ucl9vZmZzcHJpbmdfc2lyZSA8LSBjKDQsMywyKVxuXG4jIHBlZF9maXJzdGdlbiA8LSBwZWRpZ3JlZShzaXJlID0gYyhyZXAoMSwpKSlcbmBgYCJ9 -->
+<pre class="r"><code>mat_mating_firstgen &lt;- matrix(NA, nrow = nfounder, ncol = nfounder)
+mat_mating_firstgen[1,4] &lt;- 2
+mat_mating_firstgen[1,5] &lt;- 1
+mat_mating_firstgen[1,6] &lt;- 1
+mat_mating_firstgen[1,7] &lt;- 1
+mat_mating_firstgen[2,8] &lt;- 2
+
+vec_nr_offspring_sire &lt;- c(4,3,2)
+
+# ped_firstgen &lt;- pedigree(sire = c(rep(1,)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<hr />
+<p><em>Latest Changes: 2018-08-07 06:45:13 (peter)</em></p>
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiR2V0dGluZyBTdGFydGVkIFdpdGggYHNvbW1lcmAiCmF1dGhvcjogIlBldGVyIHZvbiBSb2hyIgpkYXRlOiAiMjAxOC0wOC0wNiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyMgRGlzY2xhaW1lcgpUaGlzIG5vdGVib29rIGdpdmVzIGEgZmV3IHNjcmF0Y2ggaWRlYXMgb24gaG93IHRvIHVzZSB0aGUgcGFja2FnZSBgc29tbWVyYCBmb3IgYSBzaW1wbGUgbGluZWFyIG11bHRpdmFyaWF0ZSBtaXhlZCBtb2RlbCBhbmFseXNpcy4KCgojIyBJbnN0YWxsYXRpb24KVGhlIGZpcnN0IHN0ZXAgaXMgdG8gaW5zdGFsbCB0aGUgcGFja2FnZSB0aGF0IHdlIHdhbnQgdG8gZXhwZXJpbWVudCB3aXRoCgpgYGB7cn0KaWYgKCFyZXF1aXJlKHNvbW1lcikpCiAgaW5zdGFsbC5wYWNrYWdlcygic29tbWVyIikKYGBgCgoKIyMg</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiR2V0dGluZyBTdGFydGVkIFdpdGggYHNvbW1lcmAiCmF1dGhvcjogIlBldGVyIHZvbiBSb2hyIgpkYXRlOiAiMjAxOC0wOC0wNiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyMgRGlzY2xhaW1lcgpUaGlzIG5vdGVib29rIGdpdmVzIGEgZmV3IHNjcmF0Y2ggaWRlYXMgb24gaG93IHRvIHVzZSB0aGUgcGFja2FnZSBgc29tbWVyYCBmb3IgYSBzaW1wbGUgbGluZWFyIG11bHRpdmFyaWF0ZSBtaXhlZCBtb2RlbCBhbmFseXNpcy4KCgojIyBJbnN0YWxsYXRpb24KVGhlIGZpcnN0IHN0ZXAgaXMgdG8gaW5zdGFsbCB0aGUgcGFja2FnZSB0aGF0IHdlIHdhbnQgdG8gZXhwZXJpbWVudCB3aXRoCgpgYGB7cn0KaWYgKCFyZXF1aXJlKHNvbW1lcikpCiAgaW5zdGFsbC5wYWNrYWdlcygic29tbWVyIikKYGBgCgoKIyMgRGF0YSBTaW11bGF0aW9uClRoZSB0ZXN0cyBvbiBob3cgdG8gdXNlIHRoZSBwYWNrYWdlIGBzb21tZXJgIGFuZCBwb3NzaWJseSBzb21lIG90aGVyIGhlbHBlciBwYWNrYWdlcyBpcyB0ZXN0ZWQgYnkgYSBzaW1wbGUgYW5hbHlzaXMgb2YgYSBzbWFsbCBzaW11bGF0ZWQgZGF0YXNldC4gVGhpcyBzZWN0aW9uIGRlc2NyaWJlcyBob3cgdGhlIGRhdGEgaXMgc2ltdWxhdGVkLgoKIyMjIFBhcmFtZXRlcnMKV2Ugc3RhcnQgYnkgZml4aW5nIHNvbWUgcGFyYW1ldGVycwoKYGBge3IsIGVjaG89RkFMU0V9CnNldC5zZWVkKDUwOTgpCnZwIDwtIDM2CnZnIDwtIDkKdmUgPC0gdnAgLSB2ZwpoMiA8LSB2ZyAvIHZwCmBgYAoKVGhlIGZvbGxvd2luZyB0YWJsZSBnaXZlcyBhbiBvdmVydmlldyBvdmVyIHRoZSBhc3N1bWVkIHBhcmFtZXRlciB2YWx1ZXMKCmBgYHtyLCBlY2hvPUZBTFNFfQpkZl9wYXIgPC0gZHBseXI6OnRpYmJsZShQYXJhbWV0ZXIgPSBjKCJwaGVub3R5cGljIHZhcmlhbmNlIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZ2VuZXRpYyBhZGRpdGl2ZSB2YXJpYW5jZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInJlc2lkdWFsIHZhcmlhbmNlIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaGVyaXRhYmlsaXR5IiksCiAgICAgICAgICAgICAgICAgICAgICAgIFZhbHVlID0gYyh2cCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZnLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmUsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBoMikpCmtuaXRyOjprYWJsZShkZl9wYXIsIGFsaWduID0gYygnbCcsJ3InKSkKYGBgCgoKIyMjIFBlZGlncmVlCmBgYHtyfQpuc2lyZSA8LSAzCm5kYW0gPC0gOQpuZm91bmRlciA8LSBuc2lyZSArIG5kYW0KYGBgCgpUaGUgcGVkaWdyZWUgY29uc2lzdHMgb2YgYHIgbnNpcmVgIHVucmVsYXRlZCBzaXJlcyB3aGljaCBhcmUgbWF0ZWQgdG8gYHIgbmRhbWAgZGlmZmVyZW50IGRhbXMuIEluIHRvdGFsLCB3ZSBnZXQgYHIgbmZvdW5kZXJgIHNvLWNhbGxlZCBmb3VuZGVyIGFuaW1hbHMuIFRob3NlIGFyZSBhbGwgYW5pbWFscyB3aXRob3V0IGtub3duIHBhcmVudHMuIEJhc2VkIG9uIHRoZXNlIGFuaW1hbHMsIHdlIGNhbiBjcmVhdGUgdGhlIGZvdW5kZXIgcGVkaWdyZWUKCmBgYHtyfQpzdXBwcmVzc1BhY2thZ2VTdGFydHVwTWVzc2FnZXMoIHJlcXVpcmUocGVkaWdyZWVtbSkgKQpwZWRfZm91bmRlciA8LSBwZWRpZ3JlZShzaXJlID0gcmVwKE5BLCBuZm91bmRlciksIGRhbSA9IHJlcChOQSwgbmZvdW5kZXIpLCBsYWJlbCA9IGFzLmNoYXJhY3RlcigxOm5mb3VuZGVyKSkKcGVkX2ZvdW5kZXIKYGBgCgpGb3VuZGVyIGFuaW1hbHMgYXJlIG1hdGVkIHRvIHByb2R1Y2UgdGhlIGZpcnN0IG9mZnNwcmluZyBnZW5lcmF0aW9uLiBUaGUgbnVtYmVyIG9mIG9mZnNwcmluZyBmb3IgZWFjaCBwYXJlbnQgaXMgZGV0ZXJtaW5lZCBpbiBhIHJhdGhlciBhcmJpdHJhcnkgd2F5LiBUb2dldGhlciB3aXRoIHRoZSBmb3VuZGVycyB0aGlzIGdlbmVyYXRlcyB0aGUgcGVkaWdyZWUgdXAgdW50aWwgdGhlIGZpcnN0IGdlbmVyYXRpb24uCgpgYGB7cn0KbWF0X21hdGluZ19maXJzdGdlbiA8LSBtYXRyaXgoTkEsIG5yb3cgPSBuZm91bmRlciwgbmNvbCA9IG5mb3VuZGVyKQptYXRfbWF0aW5nX2ZpcnN0Z2VuWzEsNF0gPC0gMgptYXRfbWF0aW5nX2ZpcnN0Z2VuWzEsNV0gPC0gMQptYXRfbWF0aW5nX2ZpcnN0Z2VuWzEsNl0gPC0gMQptYXRfbWF0aW5nX2ZpcnN0Z2VuWzEsN10gPC0gMQptYXRfbWF0aW5nX2ZpcnN0Z2VuWzIsOF0gPC0gMgoKdmVjX25yX29mZnNwcmluZ19zaXJlIDwtIGMoNCwzLDIpCgojIHBlZF9maXJzdGdlbiA8LSBwZWRpZ3JlZShzaXJlID0gYyhyZXAoMSwpKSkKYGBgCgoKYGBge3IsIGVjaG89RkFMU0UsIHJlc3VsdHM9J2FzaXMnfQpjYXQocm1kZG9jaGVscGVyOjpnZXRfbGF0ZXN0X2NoYW5nZSgpKQpgYGAKCg==</div>
 
 
 
