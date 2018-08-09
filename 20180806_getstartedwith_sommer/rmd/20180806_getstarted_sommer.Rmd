@@ -6,7 +6,7 @@ output: html_notebook
 ---
 
 ## Disclaimer
-This notebook gives a few scratch ideas on how to use the package `sommer` for a simple linear multivariate mixed model analysis.
+This notebook gives a few scratch ideas on how to use the package `sommer` for a simple linear multivariate mixed model analysis. We want to see different effects of a multivariate versus a univariate analysis.
 
 
 ## Installation
